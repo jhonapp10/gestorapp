@@ -16,11 +16,13 @@ const Navbar = () => {
             Muebles & Electrónica
           </Typography>
           <Button color='inherit' component={Link} to='/clientes'>Clientes</Button>
+          <Button color='inherit' component={Link} to='/productos'>Productos</Button>
           <Button color='inherit' component={Link} to='/ventas'>Ventas</Button>
           <Button color='inherit' component={Link} to='/compras'>Compras</Button>
           <Button color='inherit' component={Link} to='/reparaciones'>Reparaciones</Button>
           <Button color='inherit' component={Link} to='/proveedores'>Proveedores</Button>
           <Button color='inherit' component={Link} to='/beneficios'>Beneficios</Button>
+
         </Toolbar>
       </AppBar>
     );

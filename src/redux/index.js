@@ -5,6 +5,7 @@ import clientesReducer from './reducers/clientesReducer';
 import reparacionesReducer from './reducers/reparacionesReducer';
 import proveedoresReducer from './reducers/proveedoresReducer';
 import beneficiosReducer from './reducers/beneficiosReducer';
+import productosReducer from './reducers/productosReducer';
 const rootReducer = combineReducers({
   // Aquí irán los reducers individuales
   ventas: ventasReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   clientes: clientesReducer,
   reparaciones: reparacionesReducer,
   proveedores: proveedoresReducer,
+  productos: productosReducer,
   beneficios: beneficiosReducer,
 });
 

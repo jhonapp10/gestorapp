@@ -78,3 +78,20 @@ export const deleteReparacion = (id) => ({
   type: 'DELETE_REPARACION',
   payload: id,
 });
+
+
+// Acciones para productos
+export const addProductos = (producto) => ({
+  type: 'ADD_PRODUCTO',
+  payload: {...producto,id: Date.now()},
+});
+
+export const updateProductos = (id,field,value) => ({
+  type: 'UPDATE_PRODUCTO',
+  payload: {id,field,value},
+});
+
+export const deleteProductos = (id) => ({
+  type: 'DELETE_PRODUCTO',
+  payload: id,
+});

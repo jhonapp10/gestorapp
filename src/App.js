@@ -17,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { CssBaseline } from '@mui/material';
 import Login from "./users/components/Login";
 import Register from "./users/components/Register";
+import Productos from './productos/productos';
 
 
 function App() {
@@ -32,7 +33,8 @@ function App() {
           <Route path="/compras" element={<Compras />} />
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/reparaciones" element={<Reparaciones />} />
-          <Route path="/proveedores" element={<Proveedores />} />          
+          <Route path="/proveedores" element={<Proveedores />} />
+          <Route path="/productos" element={<Productos/>}/>          
         </Routes>
       </Router>
     </Provider>
