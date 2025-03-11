@@ -119,19 +119,17 @@ const CompraForm=({onAdd})=>{
                                 ))}
                              
                            </Form.Select>
-      </Form.Group>
-      <Form.Group>
-          <Form.Label>Seleccionar Ventas Asociadas</Form.Label>
-          <Form.Control as="select" multiple onChange={(e) => handleVentaSelect(e.target.value)}>
-            {ventas.map((venta) => (
-              <option key={venta.id} value={venta.id}>
-                {venta.cliente} - ${venta.precio}
-              </option>
-             
-            ))}
-          </Form.Control>
-        </Form.Group>
+      </Form.Group>    
       
+      <Form.Group>
+                    <Form.Label>Estado</Form.Label>
+                    <Form.Select name="estado" value={compra.estado} onChange={handleChange}>
+                      <option>Pendiente</option>
+                      <option>En Proceso</option>
+                      <option>Enviada</option>
+                      <option>Cancelada</option>
+                    </Form.Select>
+                  </Form.Group>  
       <Form.Group>
         <Form.Label>Fecha de compra</Form.Label>
       <LocalizationProvider dateAdapter={AdapterDayjs}>

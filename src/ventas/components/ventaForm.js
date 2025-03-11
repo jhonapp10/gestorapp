@@ -5,10 +5,12 @@ import { Button, Form, Table } from 'react-bootstrap';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import{DatePicker} from '@mui/x-date-pickers/DatePicker';
+import { useNavigate } from "react-router-dom";
 import Proveedores from '../../proveedores/proveedores';
 import Clientes from '../../clientes/clientes';
 const VentaForm = ({ onAdd }) => {
-  const [venta, setVenta] = useState({ cliente:'' ,productos: [], /*cantidad: 0,*/ precio: 0 ,incluirIVA: false});
+  const navigate = useNavigate(); // Hook para navegar entre rutas
+  const [venta, setVenta] = useState({ cliente:'' ,productos: [], /*cantidad: 0,*/ precio: 0 ,incluirIVA: false, comprasAsociadas:[],metodoPago:"efectivo", estadoVenta:"Pendiente",notas:""});
   const compras = useSelector((state) => state.compras); // Obtener ventas para asociarlas
   const clientes = useSelector((state)=> state.clientes);
   const productos = useSelector((state)=>state.productos);
@@ -26,6 +28,18 @@ const VentaForm = ({ onAdd }) => {
       [name]: value,
     })); */ };
 
+    // Manejo de selección de compras en la tabla
+  const handleCompraSelect = (compra) => {
+    setVenta((prevVenta) => {
+      const comprasActualizadas = prevVenta.comprasAsociadas.includes(compra.id)
+        ? prevVenta.comprasAsociadas.filter((id) => id !== compra.id)
+        : [...prevVenta.comprasAsociadas, compra.id];
+
+      return { ...prevVenta, comprasAsociadas: comprasActualizadas };
+    });
+  };
+
+
     const handleProductoChange = (index, field, value) => {
       const newProductos = [...venta.productos];
       newProductos[index][field] = value;
@@ -36,6 +50,8 @@ const VentaForm = ({ onAdd }) => {
   
       setVenta({ ...venta, productos: newProductos, precio: calcularTotal(newProductos) });
     };
+
+    
 
 
   /*const handleProductoChange = (e) => {
@@ -55,9 +71,22 @@ const VentaForm = ({ onAdd }) => {
     });
   };
 
+
+  const handleAgregarCompras = () => {
+    setVenta({
+      ...venta,
+      comprasAsociadas: [...venta.comprasAsociadas, { id: "", proveedor: "", estado:"", precio: 0 }],
+    });
+  };
   const handleEliminarProducto = (index) => {
     const newProductos = venta.productos.filter((_, i) => i !== index);
     setVenta({ ...venta, productos: newProductos, total: calcularTotal(newProductos) });
+  };
+
+
+  const handleEliminarCompra = (index) => {
+    const newCompras = venta.comprasAsociadas.filter((_, i) => i !== index);
+    setVenta({ ...venta, comprasAsociadas:newCompras });
   };
  
 
@@ -75,17 +104,17 @@ const VentaForm = ({ onAdd }) => {
     }
   };
 
-  const handleCompraSelect = (compraId) => {
+  /*const handleCompraSelect = (compraId) => {
     setVenta({
       ...venta,
       comprasAsociadas: [...venta.comprasAsociadas, compraId]
     });
-  };
+  };*/
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAdd({ ...venta, id: Date.now() });
-    setVenta({cliente:'', productos: [], precio: 0, metodoPago: "Efectivo",
+    setVenta({cliente:'', productos: [], precio: 0,comprasAsociadas:[], metodoPago: "Efectivo",
       estadoVenta: "Pendiente",
       notas: "",incluirIVA: false });
   };
@@ -103,6 +132,39 @@ const VentaForm = ({ onAdd }) => {
                             ))}
                           </Form.Control>
       </Form.Group>
+
+      <Form.Group>
+              <Form.Label>Estado</Form.Label>
+              <Form.Select name="estado" value={venta.estado} onChange={handleChange}>
+                <option>Pendiente</option>
+                <option>En Proceso</option>
+                <option>Completado</option>
+                <option>Cancelada</option>
+              </Form.Select>
+            </Form.Group>
+           <Form.Group>
+                   <Form.Label>Fecha de entrega</Form.Label>
+                 <LocalizationProvider dateAdapter={AdapterDayjs}>
+                 
+                   <DatePicker label="Basic date picker" />
+                 
+               </LocalizationProvider>
+              
+                 </Form.Group>
+      
+    
+      <Form.Group>
+        <Form.Label>Metodo Pago</Form.Label>
+        <Form.Select name="typePago" value={venta.typePago} onChange={handleChange}>
+                <option>Transferencia</option>
+                <option>Tarjeta</option>
+                <option>efectivo</option>
+              </Form.Select>
+        <Form.Label>Notas</Form.Label>
+        <Form.Control type="text" name="nota" value={venta.nota} onChange={handleChange} />
+      </Form.Group>
+
+
       <Form.Group>     
       
         
@@ -157,45 +219,82 @@ const VentaForm = ({ onAdd }) => {
       <h4>Total: ${venta.precio.toFixed(2)}</h4>
 
 
+      
+    <Button
+        variant="secondary"
+        className="mt-3"
+        onClick={() => navigate("/comprasForm")}
+      >
+        Añadir Nueva Compra
+      </Button>
+      <Button variant="secondary" onClick={handleAgregarCompras} className="mt-3">+ Agregar Compras</Button>
+
+    {/* Tabla de Compras */}
+    <Table striped bordered hover className="mt-3">
+      <thead>
+        <tr>
+          <th>Seleccionar</th>
+          <th>Compra</th>
+          <th>Proveedor</th>
+          <th>Fecha de compra</th>
+          <th>Precio</th>          
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {venta.comprasAsociadas.map((compra, index) => (
+          <tr key={index}>
+            <td>
+              <Form.Check
+                    type="checkbox"
+                    checked={venta.comprasAsociadas.includes(compra.id)}
+                    onChange={() => handleCompraSelect(compra)}
+                  />
+                  </td>
+                  <td>
+              <Form.Select value={compra.id} onChange={(e) => {
+                const selectedCompras = compras.find(c => c.id === parseInt(e.target.value));
+               
+                              
+              }}>
+                <option value="">Seleccione una compra</option>
+                {compras.map((c) => (
+                  <option key={c.id} value={c.id}>{c.proveedor} - ${c.precio}</option>
+                ))}
+              </Form.Select>
+            </td>
+            <td>
+              <Form.Control type="string" min="1" value={compra.proveedor}  />
+            </td>
+            <td>
+              <Form.Control type="date" value={compra.fechaCompra} />
+            </td>    
+
+
+            <td>
+              <Form.Control type="number" value={compra.precio.toFixed(2)} disabled />
+            </td>
+
+            <td>
+              <Form.Control type="string" value={compra.estado} disabled />
+            </td>
+            
+            <td>
+              <Button variant="danger" onClick={() => handleEliminarCompra(index)}>Eliminar</Button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+    
+
+
       <Form.Group>
         <Form.Label>Total</Form.Label>
         <Form.Control type="number" name="precio" value={venta.precio} onChange={handleChange} required />
-      </Form.Group>
-       <Form.Group>
-              <Form.Label>Estado</Form.Label>
-              <Form.Select name="estado" value={venta.estado} onChange={handleChange}>
-                <option>Pendiente</option>
-                <option>En Proceso</option>
-                <option>Completado</option>
-                <option>Cancelada</option>
-              </Form.Select>
-            </Form.Group>
-           <Form.Group>
-                   <Form.Label>Fecha de entrega</Form.Label>
-                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                 
-                   <DatePicker label="Basic date picker" />
-                 
-               </LocalizationProvider>
-              
-                 </Form.Group>
+      </Form.Group>   
       
-    
-      <Form.Group>
-        <Form.Label>Metodo Pago</Form.Label>
-        <Form.Select name="typePago" value={venta.typePago} onChange={handleChange}>
-                <option>Transferencia</option>
-                <option>Tarjeta</option>
-                <option>efectivo</option>
-              </Form.Select>
-        <Form.Label>Notas</Form.Label>
-        <Form.Control type="text" name="nota" value={venta.nota} onChange={handleChange} />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Compras</Form.Label>
-        
-
-      </Form.Group>
       <Button variant="primary" type="submit" className="mt-2">Agregar Venta</Button>
     </Form>
   );

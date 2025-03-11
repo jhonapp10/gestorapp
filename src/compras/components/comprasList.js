@@ -8,8 +8,9 @@ const ComprasList = ({ compras, onUpdate, onDelete }) => {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Productos</th>
-          <th>Cantidad</th>
+          <th>Proveedor</th>
+          <th>Estado</th>
+          <th>fecha de compra</th>
           <th>Precio</th>
           <th>Acciones</th>
         </tr>
@@ -18,8 +19,9 @@ const ComprasList = ({ compras, onUpdate, onDelete }) => {
         {compras.map((compra) => (
           <tr key={compra.id}>
             <td>{compra.id}</td>
-            <td>{compra.producto}</td>
-            <td>{compra.cantidad}</td>
+            <td>{compra.proveedor}</td>
+            <td>{compra.estado}</td>
+            <td>{compra.fechaCompra}</td>
             <td>{compra.precio}</td>
             <td>
               <Button variant="warning" onClick={() => onUpdate(compra)}>Editar</Button>{' '}
