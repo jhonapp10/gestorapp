@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
 const ProveedorForm = ({ onAdd }) => {
-  const [proveedor, setProveedor] = useState({ nombre: '', contacto: '', telefono: '' });
+  const [proveedor, setProveedor] = useState({ nombre: '', contacto: '', telefono: '', numerocuenta: '' });
+  
 
   const handleChange = (e) => {
     setProveedor({ ...proveedor, [e.target.name]: e.target.value });
@@ -12,7 +13,7 @@ const ProveedorForm = ({ onAdd }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAdd({ ...proveedor, id: Date.now() });
-    setProveedor({ nombre: '', contacto: '', telefono: '' });
+    setProveedor({ nombre: '', contacto: '', telefono: '', numerocuenta:'' });
   };
 
   return (
@@ -29,6 +30,11 @@ const ProveedorForm = ({ onAdd }) => {
         <Form.Label>Teléfono</Form.Label>
         <Form.Control type="text" name="telefono" value={proveedor.telefono} onChange={handleChange} required />
       </Form.Group>
+      <Form.Group>
+        <Form.Label>Numero de Cuenta</Form.Label>
+        <Form.Control type="password" name="numerocuenta" value={proveedor.numerocuenta} onChange={handleChange} />
+      </Form.Group>
+
       <Button variant="primary" type="submit" className="mt-2">Agregar Proveedor</Button>
     </Form>
   );

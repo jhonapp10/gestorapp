@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-const ventasInitialState = [];
+/*const ventasInitialState = [];
 
 const ventasReducer = (state = ventasInitialState, action) => {
   switch (action.type) {
@@ -18,29 +18,35 @@ const ventasReducer = (state = ventasInitialState, action) => {
   }
 };
 
-export default ventasReducer;
-/*const ventasSlice = createSlice({
+export default ventasReducer;*/
+const ventasInitialState = {
+  ventas: [] // Lista de ventas
+};
+const ventasSlice = createSlice({
   name: 'ventas',
   initialState: ventasInitialState,
   reducers: {
+    setVenta: (state, action) => {
+      state.ventas = action.payload; // Cargar ventas desde una API o estado inicial
+    },
     addVenta: (state, action) => {
-      state.push(action.payload);
+      state.ventas.push(action.payload);
     },
     updateVenta: (state, action) => {
-      const index = state.findIndex(item => item.id === action.payload.id);
-      if (index !== -1) state[index] = action.payload;
+      const index = state.ventas.findIndex(item => item.id === action.payload.id);
+      if (index !== -1) state.ventas[index] = action.payload;
     },
     deleteVenta: (state, action) => {
-      return state.filter(item => item.id !== action.payload);
+      return state.ventas.filter(item => item.id !== action.payload);
     },
   },
 });
 
 
-export const { addVenta, updateVenta, deleteVenta } = ventasSlice.actions;
+export const { addVenta, updateVenta, deleteVenta,setVenta } = ventasSlice.actions;
 
 const ventasReducer = combineReducers({
     ventas: ventasSlice.reducer,
   });
 
-export default ventasReducer;*/
+export default ventasReducer;

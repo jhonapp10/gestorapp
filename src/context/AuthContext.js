@@ -5,7 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
+//export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -29,4 +29,13 @@ export const AuthProvider = ({ children }) => {
       {!loading && children}
     </AuthContext.Provider>
   );
+};
+
+// ✅ Este hook personalizado evita errores de uso fuera del provider
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth debe usarse dentro de un AuthProvider");
+  }
+  return context;
 };

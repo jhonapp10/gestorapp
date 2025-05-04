@@ -1,0 +1,6 @@
+[
+    { "nombre": "Silla de Oficina", "precio": 150, "categoria": "Muebles", "stock": 50 },
+    { "nombre": "Mesa de Madera", "precio": 300, "categoria": "Muebles", "stock": 20 },
+    { "nombre": "Estantería", "precio": 200, "categoria": "Muebles", "stock": 15 }
+  ]
+  

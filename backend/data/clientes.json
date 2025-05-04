@@ -1,0 +1,6 @@
+[
+    { "nombre": "Juan Pérez", "email": "juanperez@gmail.com", "telefono": "123456789", "categoria": "Cliente", "imagen": "juan.jpg" },
+    {  "nombre": "María López", "email": "maria@gmail.com", "telefono": "987654321", "categoria": "Técnico", "imagen": "maria.jpg" },
+    {  "nombre": "Carlos Sánchez", "email": "carlos@gmail.com", "telefono": "555123456", "categoria": "Profesional", "imagen": "carlos.jpg" }
+  ]
+  

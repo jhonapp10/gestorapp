@@ -1,0 +1,25 @@
+[
+    {
+      "cliente":[],
+      "estado": "Pagado",
+      "typepago": "Efectivo",
+      "nota": "Entrega rápida",
+      "precio": 3200,
+      "comprasAsociadas": [],
+      "productos": [
+      ]      
+      
+    },
+    {
+     
+      "cliente":[],
+      "estado": "Pendiente",
+      "typepago": "Tarjeta",
+      "nota": "Facturar a la empresa",
+      "precio": 1600,
+      "comprasAsociadas": [],
+      "productos": [
+      ]
+    }
+  ]
+  

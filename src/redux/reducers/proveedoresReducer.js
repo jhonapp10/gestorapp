@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-const proveedoresInitialState = [];
+const proveedoresInitialState = {proveedores:[],};
 
-const proveedoresReducer = (state = proveedoresInitialState, action) => {
+/*const proveedoresReducer = (state = proveedoresInitialState, action) => {
   switch (action.type) {
     case 'ADD_PROVEEDOR':
       return [...state, action.payload];
@@ -18,29 +18,33 @@ const proveedoresReducer = (state = proveedoresInitialState, action) => {
   }
 };
 
-export default proveedoresReducer;
+export default proveedoresReducer;*/
 
-/*const proveedoresSlice = createSlice({
+const proveedoresSlice = createSlice({
   name: 'proveedores',
   initialState: proveedoresInitialState,
   reducers: {
+    setProveedor: (state, action) => {
+      state.proveedores = action.payload || []; // Cargar ventas desde una API o estado inicial
+      console.log(action.payload);
+    },
     addProveedor: (state, action) => {
-      state.push(action.payload);
+      state.proveedores.push(action.payload);
     },
     updateProveedor: (state, action) => {
-      const index = state.findIndex(item => item.id === action.payload.id);
-      if (index !== -1) state[index] = action.payload;
+      const index = state.proveedores.findIndex(item => item.id === action.payload.id);
+      if (index !== -1) state.proveedores[index] = action.payload;
     },
     deleteProveedor: (state, action) => {
-      return state.filter(item => item.id !== action.payload);
+      return state.proveedores.filter(item => item.id !== action.payload);
     },
   },
 });
 
-export const { addProveedor, updateProveedor, deleteProveedor } = proveedoresSlice.actions;
+export const { addProveedor, updateProveedor, deleteProveedor, setProveedor } = proveedoresSlice.actions;
 
 const proveedoresReducer = combineReducers({
-  compras: proveedoresSlice.reducer,
+  proveedores: proveedoresSlice.reducer,
 });
 
-export default proveedoresReducer;*/
+export default proveedoresReducer;

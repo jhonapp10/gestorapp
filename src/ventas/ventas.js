@@ -1,38 +1,38 @@
-// Ventas Module
-import React, { useState, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addVenta, updateVenta, deleteVenta } from '../redux/actions';
-import VentasList from './components/ventasList';
-import VentaForm from './components/ventaForm';
-import { Button, Table } from 'react-bootstrap';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, Button, Row, Col } from 'react-bootstrap';
 
 const Ventas = () => {
-  const ventas = useSelector((state) => state.ventas);
-  const dispatch = useDispatch();
-  
-  if (!ventas) return <p>Cargando...</p>;
-
-  
-
-  const handleAdd = (venta) => {
-    dispatch(addVenta(venta));
-  };
-
-  const handleUpdate = (venta) => {
-    dispatch(updateVenta(venta));
-  };
-
-  const handleDelete = (id) => {
-    dispatch(deleteVenta(id));
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="container mt-4">
-      <h2>Gestión de Ventas</h2>
-      <VentaForm onAdd={handleAdd} />
-      <VentasList ventas={ventas} onUpdate={handleUpdate} onDelete={handleDelete} />
-      
-      
+    <div className="container mt-5">
+      <h2 className="mb-4">Gestión de Ventas</h2>
+      <Row className="g-4">
+        <Col md={6}>
+          <Card className="shadow-sm">
+            <Card.Body>
+              <Card.Title>Nueva Venta</Card.Title>
+              <Card.Text>Registrar una nueva venta en el sistema.</Card.Text>
+              <Button variant="primary" onClick={() => navigate("/ventas/new")}>
+                Ir al Formulario
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        <Col md={6}>
+          <Card className="shadow-sm">
+            <Card.Body>
+              <Card.Title>Lista de Ventas</Card.Title>
+              <Card.Text>Ver todas las ventas registradas y administrar sus detalles.</Card.Text>
+              <Button variant="secondary" onClick={() => navigate("/ventas/list")}>
+                Ver Listado
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

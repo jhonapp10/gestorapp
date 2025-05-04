@@ -2,9 +2,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-const comprasInitialState = [];
+const comprasInitialState = {compras:[],};
 
-const comprasReducer = (state = comprasInitialState, action) => {
+/*const comprasReducer = (state = comprasInitialState, action) => {
   switch (action.type) {
     case 'ADD_COMPRA':
       return [...state, action.payload];
@@ -19,30 +19,33 @@ const comprasReducer = (state = comprasInitialState, action) => {
   }
 };
 
-export default comprasReducer;
+export default comprasReducer;*/
 
 
-/*const comprasSlice = createSlice({
+const comprasSlice = createSlice({
   name: 'compras',
   initialState: comprasInitialState,
   reducers: {
+    setCompra: (state, action) => {
+      state.compras = action.payload; // Cargar ventas desde una API o estado inicial
+    },
     addCompra: (state, action) => {
-      state.push(action.payload);
+      state.compras.push(action.payload);
     },
     updateCompra: (state, action) => {
-      const index = state.findIndex(item => item.id === action.payload.id);
-      if (index !== -1) state[index] = action.payload;
+      const index = state.compras.findIndex(item => item.id === action.payload.id);
+      if (index !== -1) state.compras[index] = action.payload;
     },
     deleteCompra: (state, action) => {
-      return state.filter(item => item.id !== action.payload);
+      return state.compras.filter(item => item.id !== action.payload);
     },
   },
 });
 
-export const { addCompra, updateCompra, deleteCompra } = comprasSlice.actions;
+export const { addCompra, updateCompra, deleteCompra, setCompra } = comprasSlice.actions;
 
 const comprasReducer = combineReducers({
   compras: comprasSlice.reducer,
 });
 
-export default comprasReducer;*/
+export default comprasReducer;

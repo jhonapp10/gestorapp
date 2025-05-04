@@ -16,7 +16,7 @@ const ClienteForm = ({ onAdd }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="mt-3">
+    <Form onSubmit={handleSubmit} className="container mt-4">
       <Form.Group>
         <Form.Label>Nombre</Form.Label>
         <Form.Control type="text" name="nombre" value={cliente.nombre} onChange={handleChange} required />

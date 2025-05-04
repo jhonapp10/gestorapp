@@ -44,15 +44,15 @@ const ClientesList = ({ clientes, onUpdate, onDelete }) => {
       </thead>
       <tbody>
         {clientesFiltrados.map((cliente) => (
-          <tr key={cliente.id}>
-            <td>{cliente.id}</td>
+          <tr key={cliente._id}>
+            <td>{cliente._id}</td>
             <td>{cliente.nombre}</td>
             <td>{cliente.email}</td>
             <td>{cliente.telefono}</td>
             <td>{cliente.categoria}</td>
             <td>
-              <Button variant="warning" onClick={() => onUpdate(cliente)}>Editar</Button>{' '}
-              <Button variant="danger" onClick={() => onDelete(cliente.id)}>Eliminar</Button>
+              <Button variant="warning" onClick={() => onUpdate(cliente)}>Editar</Button>
+              <Button variant="danger" onClick={() => onDelete(cliente._id)}>Eliminar</Button>
             </td>
           </tr>
         ))}

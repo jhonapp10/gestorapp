@@ -5,6 +5,7 @@ const ProductoForm = ({ onAdd }) => {
   const [producto, setProducto] = useState({ nombre: "", precio: "",categoria:"Electronica", stock: "" });
 
   const handleChange = (e) => {
+    console.log("producto que cambia: ",e.target.name);
     setProducto({ ...producto, [e.target.name]: e.target.value });
   };
 
@@ -13,7 +14,7 @@ const ProductoForm = ({ onAdd }) => {
     if (producto.nombre && producto.precio && producto.stock) {
         console.log(producto);
       onAdd(producto);
-      setProducto({ nombre: "", precio: "", stock: "" });
+      setProducto({ nombre: "", precio: "", stock: "", categoria:"" });
     }
   };
 

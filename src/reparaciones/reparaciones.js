@@ -1,24 +1,43 @@
 // Reparaciones Module
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addReparacion, updateReparacion, deleteReparacion } from '../redux/actions';
+import { addReparaciones, updateReparaciones, deleteReparaciones, fetchReparaciones } from '../redux/actions';
 import ReparacionesList from './components/reparacionesList';
 import ReparacionForm from './components/reparacionForm';
 
 const Reparaciones = () => {
-  const reparaciones = useSelector((state) => state.reparaciones);
+  const [reparaciones, setReparacion]= useState([]);
+  //const reparaciones = useSelector((state) => state.reparaciones?.reparaciones || []);
   const dispatch = useDispatch();
 
+    /*useEffect(()=>{
+      dispatch(fetchReparaciones());
+    },[dispatch]);*/
+
+    useEffect(() => {
+          // Simulación de una llamada a una API
+          const cargarReparaciones = async () => {
+            const response = await fetch('http://localhost:5000/api/reparaciones'); // Ajusta la URL a tu backend
+            console.log('Reparaciones',response);
+            const data = await response.json();
+            setReparacion(data);
+            dispatch(fetchReparaciones()); // Enviamos los datos al store
+          };
+      
+          cargarReparaciones();
+        }, [dispatch]);
+    
+
   const handleAdd = (reparacion) => {
-    dispatch(addReparacion(reparacion));
+    dispatch(addReparaciones(reparacion));
   };
 
   const handleUpdate = (reparacion) => {
-    dispatch(updateReparacion(reparacion));
+    dispatch(updateReparaciones(reparacion));
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteReparacion(id));
+    dispatch(deleteReparaciones(id));
   };
 
   return (

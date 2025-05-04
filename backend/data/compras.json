@@ -1,0 +1,21 @@
+[
+    {
+      "proveedor": [],
+       
+      "estado": "Completado",
+      "productos": [      
+    ],
+      
+      "precio": 3000,
+      "datecompra": "2024-01-20T10:00:00Z"
+    },
+    {
+      "proveedor": [],       
+      "estado": "Pendiente",      
+      "precio": 1600,
+      "productos": [      
+    ],
+      "datecompra": "2024-01-25T11:30:00Z"
+    }
+  ]
+  

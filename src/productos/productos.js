@@ -1,13 +1,30 @@
 // Proveedores Module
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addProductos, updateProductos, deleteProductos } from '../redux/actions';
+import { addProductos, updateProductos, deleteProductos, fetchProductos } from '../redux/actions';
 import ProductoList from './components/productoList';
 import ProductoForm from './components/productoForm';
 
 const Productos = () => {
-  const productos = useSelector((state) => state.productos);
+  const [productos, setProducto] = useState([]);
+  //const productos = useSelector((state) => state.productos?.productos || []);
   const dispatch = useDispatch();
+
+  /*useEffect(()=>{
+    dispatch(fetchProductos());
+  },[dispatch]);*/
+
+    useEffect(() => {
+      // Simulación de una llamada a una API
+      const cargarProductos = async () => {
+        const response = await fetch('http://localhost:5000/api/productos'); // Ajusta la URL a tu backend
+        const data = await response.json();
+        setProducto(data);
+        dispatch(fetchProductos()); // Enviamos los datos al store
+      };
+  
+      cargarProductos();
+    }, [dispatch]);
 
   const handleAdd = (producto) => {
     console.log("Productos_add:",producto);
